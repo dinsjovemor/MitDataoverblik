@@ -1,0 +1,36 @@
+trigger:
+  branches:
+    include:
+      - main
+      - feature/*
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: UseDotNet@2
+    displayName: 'Installer .NET 10'
+    inputs:
+      packageType: sdk
+      version: '10.0.x'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Hent pakker'
+    inputs:
+      command: restore
+      projects: 'MitDataoverblik.slnx'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Byg projektet'
+    inputs:
+      command: build
+      projects: 'MitDataoverblik.slnx'
+      arguments: '--configuration Release --no-restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Koer automatiske tests'
+    inputs:
+      command: test
+      projects: 'MitDataoverblik.Tests/MitDataoverblik.Tests.csproj'
+      arguments: '--configuration Release --no-build'
+      publishTestResults: true
