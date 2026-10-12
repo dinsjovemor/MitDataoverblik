@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="MitDataoverblik.csproj" />
+  <Project Path="MitDataoverblik.Tests/MitDataoverblik.Tests.csproj" />
 </Solution>
