@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Lokal SQLite-database
+mitdataoverblik.db
+mitdataoverblik.db-shm
+mitdataoverblik.db-wal

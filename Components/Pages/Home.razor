@@ -1,7 +1,44 @@
 ﻿@page "/"
+@using MitDataoverblik.Models
+@using MitDataoverblik.Services
+@inject BorgerService BorgerService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>MitDataoverblik</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Mit Dataoverblik</h1>
+<p>Demonstration med fiktive borgeroplysninger.</p>
 
-Welcome to your new app.
+@if (indlaeser)
+{
+    <p>Henter oplysninger...</p>
+}
+else if (borger is null)
+{
+    <p>Borgeren blev ikke fundet.</p>
+}
+else
+{
+    <h2>Mine oplysninger</h2>
+
+    <dl>
+        <dt>Navn</dt>
+        <dd>@borger.Navn</dd>
+
+        <dt>Adresse</dt>
+        <dd>@borger.Adresse</dd>
+
+        <dt>Myndighed</dt>
+        <dd>@borger.Myndighed</dd>
+    </dl>
+}
+
+@code {
+    private Borger? borger;
+    private bool indlaeser = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        borger = await BorgerService.HentBorgerAsync(1);
+        indlaeser = false;
+    }
+}
