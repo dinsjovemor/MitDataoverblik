@@ -1,0 +1,21 @@
+﻿@using MitDataoverblik.Models
+
+<section>
+    <h2>@Myndighed</h2>
+
+    <dl>
+        @foreach (var oplysning in Oplysninger)
+        {
+            <dt>@oplysning.Betegnelse</dt>
+            <dd>@oplysning.Værdi</dd>
+        }
+    </dl>
+</section>
+
+@code {
+    [Parameter]
+    public string Myndighed { get; set; } = "";
+
+    [Parameter]
+    public List<Borgeroplysning> Oplysninger { get; set; } = new();
+}

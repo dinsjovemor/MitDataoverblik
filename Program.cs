@@ -11,8 +11,9 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddDbContextFactory<AppDbContext>(options => options.UseSqlite("Data Source=mitdataoverblik.db"));
-builder.Services.AddScoped<BorgerService>(); //Dependency Injection for BorgerService, sørger for at levere
-                                             //services til de sider, der skal bruge den
+builder.Services.AddScoped<BorgerService>(); //Dependency Injection for BorgerService, sørger for at levere services til de sider, der skal bruge den
+builder.Services.AddScoped<BorgeroplysningService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
