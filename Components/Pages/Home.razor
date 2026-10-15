@@ -2,11 +2,16 @@
 @using MitDataoverblik.Models
 @using MitDataoverblik.Services
 @inject BorgerService BorgerService
+@inject BorgeroplysningService OplysningService
+@using MitDataoverblik.Components.Shared
 
 <PageTitle>MitDataoverblik</PageTitle>
 
 <h1>Mit Dataoverblik</h1>
-<p>Demonstration med fiktive borgeroplysninger.</p>
+<p>
+    Demonstration med fiktive borgeroplysninger.
+    Myndighedstilknytningerne er simulerede.
+</p>
 
 @if (indlaeser)
 {
@@ -32,13 +37,26 @@ else
     </dl>
 }
 
+<p>
+    @oplysninger.Count oplysninger fra
+    @oplysninger.Select(o => o.Myndighed).Distinct().Count() myndigheder.
+</p>
+
+@foreach (var gruppe in oplysninger.GroupBy(o => o.Myndighed))
+{
+    <Myndighedskort Myndighed="@gruppe.Key"
+                    Oplysninger="@gruppe.ToList()" />
+}
+
 @code {
     private Borger? borger;
+    private List<Borgeroplysning> oplysninger = new();
     private bool indlaeser = true;
 
     protected override async Task OnInitializedAsync()
     {
         borger = await BorgerService.HentBorgerAsync(1);
+        oplysninger = OplysningService.HentOplysninger(1);
         indlaeser = false;
     }
 }
