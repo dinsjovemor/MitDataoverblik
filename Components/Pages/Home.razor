@@ -4,6 +4,8 @@
 @inject BorgerService BorgerService
 @inject BorgeroplysningService OplysningService
 @using MitDataoverblik.Components.Shared
+@rendermode InteractiveServer
+
 
 <PageTitle>MitDataoverblik</PageTitle>
 
@@ -36,22 +38,79 @@ else
         <dd>@borger.Myndighed</dd>
     </dl>
 }
+<label for="soegning">Søg i dine oplysninger</label>
+<input id="soegning"
+       type="search"
+       @bind="soegning"
+       @bind:event="oninput" />
 
+<label for="myndighed">Myndighed</label>
+<select id="myndighed" @bind="valgtMyndighed">
+    <option value="">Alle myndigheder</option>
+
+    @foreach (var myndighed in oplysninger
+        .Select(o => o.Myndighed).Distinct())
+    {
+        <option value="@myndighed">@myndighed</option>
+    }
+</select>
+
+<label for="datatype">Datatype</label>
+<select id="datatype" @bind="valgtDatatype">
+    <option value="">Alle datatyper</option>
+
+    @foreach (var datatype in oplysninger
+        .Select(o => o.DataType).Distinct())
+    {
+        <option value="@datatype">@datatype</option>
+    }
+</select>
+<button type="button" @onclick="NulstilFiltre">
+    Nulstil søgning og filtre
+</button>
 <p>
-    @oplysninger.Count oplysninger fra
-    @oplysninger.Select(o => o.Myndighed).Distinct().Count() myndigheder.
+    Viser @FiltreredeOplysninger.Count() af @oplysninger.Count oplysninger
+    fra @FiltreredeOplysninger.Select(o => o.Myndighed).Distinct().Count()
+    @(FiltreredeOplysninger.Select(o => o.Myndighed).Distinct().Count() == 1
+        ? "myndighed" : "myndigheder").
 </p>
 
-@foreach (var gruppe in oplysninger.GroupBy(o => o.Myndighed))
+@if (!FiltreredeOplysninger.Any())
+{
+    <p>Ingen oplysninger matcher din søgning og dine filtre.</p>
+}
+@foreach (var gruppe in FiltreredeOplysninger.GroupBy(o => o.Myndighed))
 {
     <Myndighedskort Myndighed="@gruppe.Key"
                     Oplysninger="@gruppe.ToList()" />
 }
 
 @code {
+    private void NulstilFiltre()
+    {
+        soegning = "";
+        valgtMyndighed = "";
+        valgtDatatype = "";
+    }
+    private string soegning = "";
     private Borger? borger;
     private List<Borgeroplysning> oplysninger = new();
     private bool indlaeser = true;
+    private string valgtMyndighed = "";
+    private string valgtDatatype = "";
+
+    private IEnumerable<Borgeroplysning> FiltreredeOplysninger =>
+    oplysninger.Where(o =>
+        (string.IsNullOrEmpty(valgtMyndighed)
+            || o.Myndighed == valgtMyndighed)
+        &&
+        (string.IsNullOrEmpty(valgtDatatype)
+            || o.DataType == valgtDatatype)
+        &&
+        (o.Betegnelse.Contains(
+            soegning, StringComparison.OrdinalIgnoreCase)
+        || o.Værdi.Contains(
+            soegning, StringComparison.OrdinalIgnoreCase)));
 
     protected override async Task OnInitializedAsync()
     {
