@@ -1,0 +1,90 @@
+﻿@page "/opret-anmodning"
+@rendermode InteractiveServer
+@using MitDataoverblik.Models
+@using MitDataoverblik.Services
+@inject BorgeroplysningService OplysningService
+@inject RettelsesanmodningService AnmodningService
+
+<PageTitle>Opret anmodning</PageTitle>
+
+<h1>Opret anmodning om rettelse</h1>
+
+<p>
+    Dette er en simuleret anmodning.
+    Den sendes ikke til en rigtig myndighed.
+</p>
+@if (anmodningOprettet)
+{
+    <p role="status">
+        Din simulerede anmodning er oprettet.
+        Status: Afventer.
+    </p>
+}
+<EditForm Model="@anmodning" OnValidSubmit="GemAnmodning">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label for="oplysning">Hvilken oplysning skal rettes?</label>
+
+    <InputSelect id="oplysning"
+                 @bind-Value="anmodning.BorgeroplysningId">
+        <option value="0">Vælg en oplysning</option>
+
+        @foreach (var oplysning in oplysninger)
+        {
+            <option value="@oplysning.Id">
+                @oplysning.Myndighed – @oplysning.Betegnelse
+            </option>
+        }
+    </InputSelect>
+    @if (oplysninger.FirstOrDefault(
+    o => o.Id == anmodning.BorgeroplysningId) is { } valgtOplysning)
+    {
+        <p>Nuværende værdi: @valgtOplysning.Værdi</p>
+    }
+
+    <ValidationMessage For="@(() => anmodning.BorgeroplysningId)" />
+
+    <div>
+        <label for="rettelse">Ønsket rettelse</label>
+
+        <InputText id="rettelse"
+                   @bind-Value="anmodning.OensketRettelse" />
+
+        <ValidationMessage For="@(() => anmodning.OensketRettelse)" />
+    </div>
+
+    <div>
+        <label for="begrundelse">Begrundelse</label>
+
+        <InputTextArea id="begrundelse"
+                       @bind-Value="anmodning.Begrundelse" />
+
+        <ValidationMessage For="@(() => anmodning.Begrundelse)" />
+    </div>
+
+    <button type="submit" disabled="@anmodningOprettet">
+        Opret simuleret anmodning
+    </button>
+
+</EditForm>
+@code {
+    private bool anmodningOprettet = false;
+
+    private void GemAnmodning()
+    {
+        AnmodningService.OpretAnmodning(anmodning);
+        anmodningOprettet = true;
+    }
+    private Rettelsesanmodning anmodning = new()
+    {
+        BorgerId = 1
+    };
+
+    private List<Borgeroplysning> oplysninger = new();
+
+    protected override void OnInitialized()
+    {
+        oplysninger = OplysningService.HentOplysninger(1);
+    }
+}
