@@ -3,6 +3,7 @@
 @using MitDataoverblik.Services
 @inject BorgerService BorgerService
 @inject BorgeroplysningService OplysningService
+@inject RettelsesanmodningService AnmodningService
 @using MitDataoverblik.Components.Shared
 @rendermode InteractiveServer
 
@@ -88,6 +89,23 @@ else
                     Oplysninger="@gruppe.ToList()" />
 }
 
+<h2>Mine anmodninger</h2>
+
+<p>Antal anmodninger: @anmodninger.Count</p>
+@foreach (var anmodning in anmodninger
+    .OrderByDescending(a => a.Oprettelsesdato)
+    .Take(3))
+{
+    <Anmodningskort Anmodning="@anmodning"
+                    Betegnelse="@(oplysninger.FirstOrDefault(
+                    o => o.Id == anmodning.BorgeroplysningId)?.Betegnelse
+                    ?? "Ukendt oplysning")" />
+}
+
+<p>
+    <a href="/mine-anmodninger">Se alle mine anmodninger</a>
+</p>
+
 @code {
     private void NulstilFiltre()
     {
@@ -98,6 +116,7 @@ else
     private string soegning = "";
     private Borger? borger;
     private List<Borgeroplysning> oplysninger = new();
+    private List<Rettelsesanmodning> anmodninger = new();
     private bool indlaeser = true;
     private string valgtMyndighed = "";
     private string valgtDatatype = "";
@@ -119,6 +138,7 @@ else
     {
         borger = await BorgerService.HentBorgerAsync(1);
         oplysninger = OplysningService.HentOplysninger(1);
+        anmodninger = AnmodningService.HentAnmodninger(1);
         indlaeser = false;
     }
 }

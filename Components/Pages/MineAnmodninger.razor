@@ -1,0 +1,44 @@
+﻿@page "/mine-anmodninger"
+@rendermode InteractiveServer
+@using MitDataoverblik.Models
+@using MitDataoverblik.Services
+@inject RettelsesanmodningService AnmodningService
+@using MitDataoverblik.Components.Shared
+@inject BorgeroplysningService OplysningService
+<PageTitle>Mine anmodninger</PageTitle>
+
+<h1>Mine anmodninger</h1>
+<p>
+    <a href="/">Tilbage til dataoverblik</a>
+</p>
+
+<p>Her vises dine simulerede rettelsesanmodninger.</p>
+
+@if (!anmodninger.Any())
+{
+    <p>Du har endnu ingen anmodninger.</p>
+
+    <p>
+        <a href="/opret-anmodning">Opret en anmodning om rettelse</a>
+    </p>
+}
+@foreach (var anmodning in anmodninger)
+
+{
+    <Anmodningskort
+        Anmodning="@anmodning"
+        Betegnelse="@(oplysninger.FirstOrDefault(
+            o => o.Id == anmodning.BorgeroplysningId)?.Betegnelse
+            ?? "Ukendt oplysning")" />
+}
+
+@code {
+    private List<Rettelsesanmodning> anmodninger = new();
+    private List<Borgeroplysning> oplysninger = new();
+
+    protected override void OnInitialized()
+    {
+        anmodninger = AnmodningService.HentAnmodninger(1);
+        oplysninger = OplysningService.HentOplysninger(1);
+    }
+}
