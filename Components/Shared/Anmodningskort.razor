@@ -1,0 +1,24 @@
+﻿@using MitDataoverblik.Models
+
+<section>
+    <h2>@Betegnelse</h2>
+
+    <dl>
+        <dt>Ønsket rettelse</dt>
+        <dd>@Anmodning.OensketRettelse</dd>
+
+        <dt>Oprettet</dt>
+        <dd>@Anmodning.Oprettelsesdato.ToString("dd-MM-yyyy HH:mm")</dd>
+
+        <dt>Status</dt>
+        <dd>@Anmodning.Status</dd>
+    </dl>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public Rettelsesanmodning Anmodning { get; set; } = default!;
+
+    [Parameter]
+    public string Betegnelse { get; set; } = "";
+}
