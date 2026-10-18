@@ -1,0 +1,67 @@
+﻿@page "/login"
+@rendermode InteractiveServer
+@using MitDataoverblik.Models
+@using MitDataoverblik.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@inject DemoAuthenticationStateProvider LoginService
+
+<PageTitle>Simuleret login</PageTitle>
+
+<h1>Simuleret login</h1>
+
+<p>
+    Vælg en fiktiv bruger.
+    Dette login er kun til demonstration.
+</p>
+<AuthorizeView>
+    <Authorized Context="loginstatus">
+        <p>
+            Logget ind som @loginstatus.User.Identity?.Name
+            – Rolle: @loginstatus.User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value
+        </p>
+
+        <button type="button" @onclick="LoginService.LogUd">
+            Log ud
+        </button>
+
+        <p>
+            <a href="/">Gå til dataoverblik</a>
+        </p>
+    </Authorized>
+
+    <NotAuthorized>
+        <p>Du er ikke logget ind.</p>
+    </NotAuthorized>
+</AuthorizeView>
+@foreach (var bruger in brugere)
+{
+    <p>
+        <button type="button"
+                @onclick="() => LoginService.LogInd(bruger)">
+            Log ind som @bruger.Navn (@bruger.Rolle)
+        </button>
+    </p>
+}
+@code {
+    private List<Demobruger> brugere = new()
+    {
+        new Demobruger
+        {
+            Id = 1,
+            Navn = "Anna Hansen",
+            Rolle = "Borger"
+        },
+        new Demobruger
+        {
+            Id = 2,
+            Navn = "Bo Nielsen",
+            Rolle = "Borger"
+        },
+        new Demobruger
+        {
+            Id = 3,
+            Navn = "Demo Administrator",
+            Rolle = "Admin"
+        }
+    };
+}
