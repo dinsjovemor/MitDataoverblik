@@ -59,7 +59,17 @@ namespace MitDataoverblik.Services
                 Værdi = "9,5500",
                 DataType = "Tal",
                 Myndighed = "Klimadatastyrelsen"
-            }
+            },
+
+            new Borgeroplysning
+{
+    Id = 7,
+    BorgerId = 2,
+    Betegnelse = "Folkeregisteradresse",
+    Værdi = "Demovej 2, 8600 Silkeborg",
+    DataType = "Tekst",
+    Myndighed = "Silkeborg Kommune"
+}
         };
 
         public List<Borgeroplysning> HentOplysninger(int borgerId)

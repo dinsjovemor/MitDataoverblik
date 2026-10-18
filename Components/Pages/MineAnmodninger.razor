@@ -1,10 +1,15 @@
 ﻿@page "/mine-anmodninger"
+@attribute [Authorize]
 @rendermode InteractiveServer
 @using MitDataoverblik.Models
 @using MitDataoverblik.Services
 @inject RettelsesanmodningService AnmodningService
 @using MitDataoverblik.Components.Shared
 @inject BorgeroplysningService OplysningService
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider LoginstatusService
+
 <PageTitle>Mine anmodninger</PageTitle>
 
 <h1>Mine anmodninger</h1>
@@ -36,9 +41,18 @@
     private List<Rettelsesanmodning> anmodninger = new();
     private List<Borgeroplysning> oplysninger = new();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        anmodninger = AnmodningService.HentAnmodninger(1);
-        oplysninger = OplysningService.HentOplysninger(1);
+        var loginstatus =
+            await LoginstatusService.GetAuthenticationStateAsync();
+
+        var idTekst = loginstatus.User
+            .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (int.TryParse(idTekst, out var borgerId))
+        {
+            anmodninger = AnmodningService.HentAnmodninger(borgerId);
+            oplysninger = OplysningService.HentOplysninger(borgerId);
+        }
     }
 }
