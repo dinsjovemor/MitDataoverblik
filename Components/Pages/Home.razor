@@ -22,6 +22,22 @@
     Demonstration med fiktive borgeroplysninger.
     Myndighedstilknytningerne er simulerede.
 </p>
+<div class="summary-grid">
+    <div class="summary-card">
+        <strong>@oplysninger.Count</strong>
+        <span>Oplysninger</span>
+    </div>
+
+    <div class="summary-card">
+        <strong>@oplysninger.Select(o => o.Myndighed).Distinct().Count()</strong>
+        <span>Myndigheder</span>
+    </div>
+
+    <div class="summary-card">
+        <strong>@anmodninger.Count</strong>
+        <span>Anmodninger</span>
+    </div>
+</div>
 
 @if (indlaeser)
 {
@@ -46,36 +62,45 @@ else
         <dd>@borger.Myndighed</dd>
     </dl>
 }
-<label for="soegning">Søg i dine oplysninger</label>
-<input id="soegning"
-       type="search"
-       @bind="soegning"
-       @bind:event="oninput" />
+<div class="filter-panel">
+    <div class="filter-field">
+        <label for="soegning">Søg i dine oplysninger</label>
+        <input id="soegning"
+               type="search"
+               @bind="soegning"
+               @bind:event="oninput" />
+    </div>
 
-<label for="myndighed">Myndighed</label>
-<select id="myndighed" @bind="valgtMyndighed">
-    <option value="">Alle myndigheder</option>
+    <div class="filter-field">
+        <label for="myndighed">Myndighed</label>
+        <select id="myndighed" @bind="valgtMyndighed">
+            <option value="">Alle myndigheder</option>
 
-    @foreach (var myndighed in oplysninger
-        .Select(o => o.Myndighed).Distinct())
-    {
-        <option value="@myndighed">@myndighed</option>
-    }
-</select>
+            @foreach (var myndighed in oplysninger
+                .Select(o => o.Myndighed).Distinct())
+            {
+                <option value="@myndighed">@myndighed</option>
+            }
+        </select>
+    </div>
 
-<label for="datatype">Datatype</label>
-<select id="datatype" @bind="valgtDatatype">
-    <option value="">Alle datatyper</option>
+    <div class="filter-field">
+        <label for="datatype">Datatype</label>
+        <select id="datatype" @bind="valgtDatatype">
+            <option value="">Alle datatyper</option>
 
-    @foreach (var datatype in oplysninger
-        .Select(o => o.DataType).Distinct())
-    {
-        <option value="@datatype">@datatype</option>
-    }
-</select>
-<button type="button" @onclick="NulstilFiltre">
-    Nulstil søgning og filtre
-</button>
+            @foreach (var datatype in oplysninger
+                .Select(o => o.DataType).Distinct())
+            {
+                <option value="@datatype">@datatype</option>
+            }
+        </select>
+    </div>
+
+    <button type="button" @onclick="NulstilFiltre">
+        Nulstil søgning og filtre
+    </button>
+</div>
 <p>
     Viser @FiltreredeOplysninger.Count() af @oplysninger.Count oplysninger
     fra @FiltreredeOplysninger.Select(o => o.Myndighed).Distinct().Count()

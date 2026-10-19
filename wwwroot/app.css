@@ -36,3 +36,289 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+/* Grunddesign til Mit dataoverblik */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f4f7fb;
+    color: #17243b;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+    color: #10264d;
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+}
+
+a {
+    color: #185adb;
+}
+
+    a:hover {
+        text-decoration-thickness: 2px;
+    }
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+.site-header {
+    background: #ffffff;
+    border-bottom: 1px solid #dce4ef;
+}
+
+.site-header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.site-brand {
+    color: #10264d;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.demo-badge {
+    background: #e7f0ff;
+    color: #174b9b;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+}
+.myndighedskort {
+    background: #ffffff;
+    border: 1px solid #dce4ef;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 3px 12px rgba(16, 38, 77, 0.04);
+}
+
+    .myndighedskort h2 {
+        margin-top: 0;
+        margin-bottom: 18px;
+    }
+
+    .myndighedskort dl {
+        margin: 0;
+        display: grid;
+        grid-template-columns: minmax(140px, 1fr) 2fr;
+        gap: 10px 20px;
+    }
+
+    .myndighedskort dt {
+        color: #52627a;
+    }
+
+    .myndighedskort dd {
+        margin: 0;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+
+@media (max-width: 600px) {
+    .myndighedskort dl {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .myndighedskort dd {
+        margin-bottom: 12px;
+    }
+}
+input,
+select,
+textarea {
+    max-width: 100%;
+    padding: 10px 12px;
+    color: #17243b;
+    background: #ffffff;
+    border: 1px solid #bdcadd;
+    border-radius: 8px;
+}
+
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    button:focus-visible,
+    a:focus-visible {
+        outline: 3px solid #85b5ff;
+        outline-offset: 3px;
+    }
+
+button {
+    padding: 10px 16px;
+    color: #ffffff;
+    background: #185adb;
+    border: 1px solid #185adb;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+    button:hover:not(:disabled) {
+        background: #1247ae;
+    }
+
+    button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+.filter-panel {
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 20px;
+    margin: 24px 0 16px;
+    background: #ffffff;
+    border: 1px solid #dce4ef;
+    border-radius: 12px;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 180px;
+    min-width: 0;
+}
+
+    .filter-field:first-child {
+        flex-grow: 2;
+    }
+
+    .filter-field label {
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .filter-field input,
+    .filter-field select {
+        width: 100%;
+    }
+
+@media (max-width: 600px) {
+    .filter-panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-field {
+        flex: auto;
+    }
+}
+.anmodningskort {
+    background: #ffffff;
+    border: 1px solid #dce4ef;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 3px 12px rgba(16, 38, 77, 0.04);
+}
+
+    .anmodningskort h2 {
+        margin-top: 0;
+        margin-bottom: 16px;
+    }
+
+    .anmodningskort dl {
+        margin: 0;
+    }
+
+    .anmodningskort dt {
+        color: #52627a;
+        font-size: 0.9rem;
+        margin-top: 12px;
+    }
+
+    .anmodningskort dd {
+        margin: 4px 0 0;
+        overflow-wrap: anywhere;
+    }
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: #e9edf3;
+    color: #26364d;
+}
+
+    .status-badge[data-status="Afventer"] {
+        background: #fff0bd;
+        color: #694b00;
+    }
+
+    .status-badge[data-status="Under behandling"] {
+        background: #e1edff;
+        color: #174b9b;
+    }
+
+    .status-badge[data-status="Afsluttet"] {
+        background: #dff3e5;
+        color: #205c35;
+    }
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.summary-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px 24px;
+    background: #ffffff;
+    border: 1px solid #dce4ef;
+    border-radius: 12px;
+}
+
+    .summary-card strong {
+        color: #10264d;
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+
+    .summary-card span {
+        color: #52627a;
+    }
+
+@media (max-width: 600px) {
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
