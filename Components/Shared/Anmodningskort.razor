@@ -1,6 +1,6 @@
 ﻿@using MitDataoverblik.Models
 
-<section>
+<section class="anmodningskort">
     <h2>@Betegnelse</h2>
 
     <dl>
@@ -11,7 +11,11 @@
         <dd>@Anmodning.Oprettelsesdato.ToString("dd-MM-yyyy HH:mm")</dd>
 
         <dt>Status</dt>
-        <dd>@Anmodning.Status</dd>
+        <dd>
+            <span class="status-badge" data-status="@Anmodning.Status">
+                @Anmodning.Status
+            </span>
+        </dd>
     </dl>
 </section>
 
