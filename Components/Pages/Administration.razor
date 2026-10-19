@@ -1,0 +1,53 @@
+﻿@page "/administration"
+@attribute [Authorize(Roles = "Admin")]
+@rendermode InteractiveServer
+@using MitDataoverblik.Models
+@using MitDataoverblik.Services
+@inject RettelsesanmodningService AnmodningService
+
+<PageTitle>Administration</PageTitle>
+
+<h1>Administration af anmodninger</h1>
+<p>
+    <a href="/login">Tilbage til login</a>
+</p>
+
+<p>
+    Her behandles simulerede rettelsesanmodninger.
+    Statusændringer ændrer ikke borgerens oprindelige oplysninger.
+</p>
+@if (!anmodninger.Any())
+{
+    <p>Der er endnu ingen anmodninger at behandle.</p>
+}
+
+@foreach (var anmodning in anmodninger)
+{
+    <section>
+        <h2>Anmodning #@anmodning.Id</h2>
+
+        <p>Borger-ID: @anmodning.BorgerId</p>
+        <p>Oplysnings-ID: @anmodning.BorgeroplysningId</p>
+        <p>Ønsket rettelse: @anmodning.OensketRettelse</p>
+        <p>Begrundelse: @anmodning.Begrundelse</p>
+        <p>Status: @anmodning.Status</p>
+        <label for="@($"status-{anmodning.Id}")">Skift status</label>
+
+        <select id="@($"status-{anmodning.Id}")"
+                value="@anmodning.Status"
+                @onchange="e => AnmodningService.OpdaterStatus(
+                anmodning.Id, e.Value?.ToString() ?? string.Empty)">
+<option value="Afventer">Afventer</option>
+<option value="Under behandling">Under behandling</option>
+<option value="Afsluttet">Afsluttet</option>
+</select>
+    </section>
+}
+@code {
+    private List<Rettelsesanmodning> anmodninger = new();
+
+    protected override void OnInitialized()
+    {
+        anmodninger = AnmodningService.HentAlleAnmodninger();
+    }
+}

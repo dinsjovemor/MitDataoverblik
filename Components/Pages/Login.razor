@@ -33,6 +33,13 @@
         <p>Du er ikke logget ind.</p>
     </NotAuthorized>
 </AuthorizeView>
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <p>
+            <a href="/administration">Gå til administration</a>
+        </p>
+    </Authorized>
+</AuthorizeView>
 @foreach (var bruger in brugere)
 {
     <p>
