@@ -30,6 +30,7 @@
 @foreach (var anmodning in anmodninger)
 
 {
+    @* Finder oplysningens betegnelse ud fra ID eller viser en reservetekst *@
     <Anmodningskort
         Anmodning="@anmodning"
         Betegnelse="@(oplysninger.FirstOrDefault(
@@ -43,14 +44,18 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // Henter den aktuelle loginstatus
         var loginstatus =
             await LoginstatusService.GetAuthenticationStateAsync();
 
+        // Finder brugerens ID som tekst eller null, hvis ID-claimet mangler
         var idTekst = loginstatus.User
             .FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
+        // Henter kun data, hvis brugerens ID kan omdannes til et heltal
         if (int.TryParse(idTekst, out var borgerId))
         {
+            // Henter anmodninger og oplysninger for den aktuelle borger
             anmodninger = AnmodningService.HentAnmodninger(borgerId);
             oplysninger = OplysningService.HentOplysninger(borgerId);
         }
