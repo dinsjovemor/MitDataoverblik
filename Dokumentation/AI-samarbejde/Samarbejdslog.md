@@ -36,3 +36,25 @@ Registreret: 15. oktober 2026 kl. 09.27, dansk tid.
 - Brugerens beslutning:
 - Resultat og eventuel afprøvning:
 - Næste skridt:
+
+## Samlet afprøvning den 20. oktober 2026
+
+Efterfølgende opsummering fra dialogen samme dag, uden præcise hændelsestidspunkter.
+
+- Den studerende gennemførte Release-build og eksisterende tests; skærmbilledet viste 2 beståede tests og ingen fejl.
+- AI guidede trinvis gennem søgning, filtre, validering, oprettelse, shared state, brugeradskillelse, statusændringer og adgangskontrol.
+- Den studerende rettede en testafklaring: søgning med små bogstaver var først prøvet, hvorefter ADRESSE med store bogstaver blev afprøvet særskilt. En anden afklaring var, at brugeren allerede stod på forsiden og derefter skulle klikke Se alle mine anmodninger.
+- Brugeren bekræftede resultaterne undervejs og delte skærmbilleder. Afprøvningen er ikke en uafhængig teknisk audit fra AI.
+- Resultater og kendte begrænsninger er samlet i Dokumentation/Slutkontrol-2026-10-20.md.
+- Næste skridt er opgavekravsgennemgang og præsentationsforberedelse. Sprint 2 review og retrospective er fortsat planlagt til 21. oktober.
+
+## Sprintafslutning og kommentarkontrol den 21. oktober 2026
+
+Efterfølgende opsummering af dagens dialog, registreret kl. 23.12 dansk tid.
+
+- Sprint 2 review og retrospective er gennemført og refereret i Scrum-moeder.md.
+- Den studerende bad om en direkte sammenligning med opgavekravene. AI gennemlæste relevante dele af den aktuelle kode og sammenholdt dem med opgavekravene og tidligere afprøvninger. Der blev ikke kørt nye tests i denne sammenligning.
+- Beslutning: Ingen nye funktioner; fokus på forståelse, dokumentation, øvelse og aflevering.
+- Den studerende foreslog kommentarkontrol under kodegennemgangen som en ny forbedring. AI skal kontrollere korte forklarende kommentarer, så de bliver pålidelige hjælpelinjer. Kommentarer skrives uden punktum til sidst.
+- Personlige oplysninger fra refleksionen er udeladt af referatet. Arbejdsform og læringsudbytte er bevaret.
+- Opdateringerne er gemt lokalt. Commit og push er ikke udført som del af referatskrivningen.

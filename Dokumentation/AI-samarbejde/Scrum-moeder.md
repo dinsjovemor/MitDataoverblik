@@ -75,3 +75,31 @@ Gælder fremadrettet. Den gør ikke tidligere opgaver automatisk godkendte efter
 - PB04 er Issue #6 på branchen feature/6-mine-anmodninger. Kodearbejdet afventede mødet.
 - Den oprindelige ugeplan bevares som sammenligningsgrundlag. Torsdag 22. oktober er fortsat buffer og forberedelse.
 - Næste konkrete skridt: Efter pausen undersøges det synlige fejlpanel uden at antage, at årsagen allerede er kendt.
+
+## Gennemført møde 21. oktober 2026
+
+Sprint 2 review og retrospective gennemført i chatten. Referatet er registreret 21. oktober kl. 23.12 dansk tid. Dette er registreringstidspunktet, ikke et præcist start- eller sluttidspunkt for mødet. AI faciliterede og sammenfattede; den studerende tog stilling til beslutningerne. Historiske planer ovenfor bevares som historik; dagens referat angiver, at sprintafslutningen nu er gennemført.
+
+### Sprint 2 review
+
+- Sprintperiode: 17.–21. oktober 2026.
+- Sprintmål: Borgeren kan følge sine rettelsesanmodninger, og en administrator kan ændre deres status med adgang styret af brugerroller.
+- Gennemført arbejde ifølge udviklingsdialogen: PB04 Mine anmodninger, PB05 Simuleret login, PB06 Administration og det senere tilføjede PB07 Visuel forbedring. Opgaverne er merged, markeret Done og synkroniseret til Azure DevOps og GitHub ifølge de tidligere delte resultater.
+- Reviewgrundlag: Den samlede manuelle afprøvning den 20. oktober, skærmbilleder og brugerens bekræftelser samt læsning af den aktuelle kode den 21. oktober. Der blev ikke udført en ny fuld browserdemonstration eller genkørsel af tests under dagens møde.
+- Den studerende fremhævede, at forløbet virkede via navigation i samme browserfane uden fuld genindlæsning. Borgeren oprettede en anmodning, administratoren ændrede status, og borgeren kunne se ændringen.
+- Den studerende forklarede afgrænsningen: Demologin gælder den interaktive forbindelse og udsteder ikke en logincookie. Registreret cookie-authentication understøtter blandt andet videresendelse ved direkte adgang, men udsteder ikke en cookie gennem demologinets nuværende forløb. Anmodninger i den scoped service kan gå tabt ved ny forbindelse.
+- På den studerendes initiativ blev kravene sammenholdt med løsningen. De seks tekniske minimumsområder har konkrete eksempler: komponenter, services/DI, formular/model/binding/validering, datahåndtering med søgning/filtre, shared state og authentication/rollebaseret authorization.
+- Vurdering: Sprintmålet er nået inden for den dokumenterede prototypeafgrænsning. Dette er projektets egen vurdering og ikke underviserens endelige bedømmelse eller en uafhængig sikkerhedsaudit.
+- Beslutning godkendt af den studerende: Fasthold løsningen uden nye funktioner. Brug resterende tid på procesdokumentation, kodeforståelse, præsentationsøvelse og afleveringskontrol.
+- Resterende arbejde: Gennemgang af kommentarer og dokumentation i Git, tidsmålt præsentation på højst 15 minutter og klargøring/kontrol af kildekodepakken før fredag 23. oktober kl. 12.
+- Detaljerede testresultater og ikke-afprøvede forhold findes i Dokumentation/Slutkontrol-2026-10-20.md.
+
+### Sprint 2 retrospective
+
+- Forståelsesstop: Korte spørgsmål, visuelle forklaringer og gentagen kodegennemgang styrkede den studerendes forståelse og selvtillid. Muligheden for at vende tilbage til stoffet og selv forklare eller afprøve det havde værdi.
+- Afslutningstjekliste: Visuel afkrydsning gjorde fremdriften konkret og gav oplevelsen af at lykkes med ét punkt ad gangen.
+- Kombinationen af Scrum-struktur og AI-sparring gjorde det lettere at dele projektet op i små opgaver. Forspringet gav plads til designløft, gentagelse og præsentationsforberedelse.
+- De to forbedringer fra sidste retrospective fortsættes: forståelsesstop og fælles afslutningstjekliste.
+- Ny forbedring foreslået af den studerende og aftalt: Under kodegennemgangen kontrollerer AI den studerendes kommentarer for teknisk korrekthed og tydelighed. Kommentarerne skal fungere som fremtidige hjælpelinjer til, hvad der sker hvor.
+- Praktisk arbejdsform: Gennemgå én lille kodebid og dens kommentarer ad gangen. Skeln mellem kodens faktiske handling og betydningen i appens forløb. Brug korte kommentarer med den studerendes egne ord og uden punktum til sidst.
+- Næste skridt: Fortsæt den afgrænsede kodegennemgang med kommentarkontrol og forbindelser til præsentationen.
